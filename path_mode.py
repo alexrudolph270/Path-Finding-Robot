@@ -14,8 +14,8 @@ import math
 #from gopigo import *
 
 #sample path, usually will get path from matrixdraw methods (pedro code)
-path = [[3 , 4], [4 , 5] ,[5, 6]]
-
+#path = [[1 , 2], [1 , 3] ,[2, 3]]
+path = [[1 , 2] ,[1, 4]]
 
 def orient(dif = []): #<-------- needs to be expanded upon
 	#Given the difference of the location and next point,
@@ -43,7 +43,8 @@ def dimensions():
 	return 20
 
 #default starting location will be in the middle of matrix
-default_location = [int(dimensions() / 2) , int(dimensions() / 2)]
+#default_location = [int(dimensions() / 2) , int(dimensions() / 2)]
+default_location = [1,1]
 location = default_location
 print ("Default location is %d",default_location)
 #python is so slick you don't even need a /n for nextline, but what if I didn't want it? ug?
@@ -74,7 +75,7 @@ while path:
 	difference = [next_location[0] - location[0], next_location[1] - location[1]]
 	
 	#change orientation if neccesary
-	theta = orient(difference)
+	#theta = orient(difference)
 	
 	#distance is in the units of the MATRIX itself, not feet or anything, we must convert later
 	distance = math.sqrt( math.pow(difference[0],2) + math.pow(difference[1],2))
