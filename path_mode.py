@@ -32,7 +32,7 @@ def orient(dif = []): #<-------- needs to be expanded upon
 	elif(dif[0] < 0):
 		next_theta = next_theta + 360
 		
-	#rotate (next_theta - theta)°	
+	#rotate (next_theta - theta)Â°	
 		
 	return next_theta
 
@@ -53,7 +53,8 @@ print ("Default location is %d",default_location)
 theta = 0 
 
 #approximate velocity
-approx_velocity = 200 
+#approx_velocity = 200 #this is in abitrary gopigo units/ sce
+approx_velocity = 1.18 #this is in feet/sec
 #probably need in clicks/sec, this is default speed of robot
 #however, this seems way to fast, sleep doesn't seem to wait long enough
 
@@ -99,7 +100,8 @@ while path:
 	
 	# I was wrong, we should be able to use the speed of robot in clicks/sec
 	# time = distance / rate 
-	time.sleep((move_distance / approx_velocity) * 1.3)
+	#time.sleep((move_distance / approx_velocity) * 1.3)
+	time.sleep( ( (distance * feet_per_unit) / approx_velocity) * 1.3) #
 	
 	#We now 'should' be at the next coordinate in the list
 	location = next_location
