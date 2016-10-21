@@ -15,8 +15,8 @@ from gopigo import *
 
 #test paths
 #sample path, usually will get path from matrixdraw methods (pedro code)
-#path = [[1 , 2], [1 , 3] ,[2, 3]]
-path = [[1 , 2] ,[1, 4]]
+path = [[1 , 2], [1 , 3] ,[2, 3]]
+#path = [[1 , 2] ,[1, 4]]
 
 def orient(dif = []): #<-------- needs to be expanded upon
 	#Given the difference of the location and next point,
@@ -35,8 +35,14 @@ def orient(dif = []): #<-------- needs to be expanded upon
 	
 	if(rotate < 0)
 		rotate = 360 + rotate
-		
+	
 	#rotate robot code (in bailey be praised)
+	enc_tgt(1,1,int(rotate * 0.1))	
+	right_rot()
+	sleep(2)
+	stop()
+		
+	
 
 	return next_theta 
 
