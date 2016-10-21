@@ -33,6 +33,9 @@ def orient(dif = []): #<-------- needs to be expanded upon
 	
 	rotate = next_theta - theta
 	
+	if(rotate == 0):
+		return next_theta
+	
 	if(rotate < 0):
 		rotate = 360 + rotate
 	
