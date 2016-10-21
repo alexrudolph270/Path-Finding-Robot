@@ -11,8 +11,9 @@ TODO:
 
 import time
 import math
-#from gopigo import *
+from gopigo import *
 
+#test paths
 #sample path, usually will get path from matrixdraw methods (pedro code)
 #path = [[1 , 2], [1 , 3] ,[2, 3]]
 path = [[1 , 2] ,[1, 4]]
@@ -32,7 +33,7 @@ def orient(dif = []): #<-------- needs to be expanded upon
 	elif(dif[0] < 0):
 		next_theta = next_theta + 360
 		
-	#rotate (next_theta - theta)°	
+	#rotate (next_theta - theta)
 		
 	return next_theta
 
@@ -93,10 +94,8 @@ while path:
 	print("Distance in clicks of wheel: ", move_distance)
 			
 	#~~~~robot stuff~~~~
-	'''
-	enc_tgt(1,1,move_distance)
+	enc_tgt(1,1,int(move_distance))
 	fwd()
-	#''' #uncomment later
 	#~~~~~~~~~~~~~~~~~~~~
 	
 	# I was wrong, we should be able to use the speed of robot in clicks/sec
