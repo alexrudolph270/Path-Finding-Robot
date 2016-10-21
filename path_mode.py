@@ -26,14 +26,14 @@ def orient(dif = []): #<-------- needs to be expanded upon
 		next_theta = 90
 	elif(dif[0] < 0):
 		next_theta = 270
-	elif(dif[1] > 0)
+	elif(dif[1] > 0):
 		next_theta = 0
-	elif(dif[1] < 0)
+	elif(dif[1] < 0):
 		next_theta = 180
 	
 	rotate = next_theta - theta
 	
-	if(rotate < 0)
+	if(rotate < 0):
 		rotate = 360 + rotate
 	
 	#rotate robot code (in bailey be praised)
@@ -64,7 +64,6 @@ print ("Default location is %d",default_location)
 theta = 0 
 
 #approximate velocity
-#approx_velocity = 200 #this is in abitrary gopigo units/ sce
 approx_velocity = 1.18 #this is in feet/sec
 #probably need in clicks/sec, this is default speed of robot
 #however, this seems way to fast, sleep doesn't seem to wait long enough
@@ -85,7 +84,7 @@ while path:
 	difference = [next_location[0] - location[0], next_location[1] - location[1]]
 	
 	#change orientation if neccesary
-	#theta = orient(difference)
+	theta = orient(difference)
 	
 	#distance is in the units of the MATRIX itself, not feet or anything, we must convert later
 	distance = math.sqrt( math.pow(difference[0],2) + math.pow(difference[1],2))
