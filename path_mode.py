@@ -22,20 +22,23 @@ def orient(dif = []): #<-------- needs to be expanded upon
 	#Given the difference of the location and next point,
 	 #this function finds the new orientation the robot has to make, and rotates appropriatly 
 	
-	#Getting the new orientation
-	#This will cause problems if dif[1] == 0, need to fix
-	next_theta = math.atan(dif[0]/dif[1])
-
-	if  (dif[0] < 0 and dif[0] < 0):
-		next_theta = next_theta + 270 
-	elif(dif[1] < 0):
-		next_theta = next_theta + 180
+	if(dif[0] > 0):
+		next_theta = 90
 	elif(dif[0] < 0):
-		next_theta = next_theta + 360
+		next_theta = 270
+	elif(dif[1] > 0)
+		next_theta = 0
+	elif(dif[1] < 0)
+		next_theta = 180
+	
+	rotate = next_theta - theta
+	
+	if(rotate < 0)
+		rotate = 360 + rotate
 		
-	#rotate (next_theta - theta)
-		
-	return next_theta
+	#rotate robot code (in bailey be praised)
+
+	return next_theta 
 
 		
 def dimensions():
