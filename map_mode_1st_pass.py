@@ -51,4 +51,4 @@ def_mapmode():
 ## end of definitions
 
 stop()
-autonomy()
+map_mode()
