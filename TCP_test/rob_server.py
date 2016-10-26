@@ -15,4 +15,3 @@ c.send("Connected, your address is " + str(addr))
 inbound = c.recv(64).decode("ascii")
 print(inbound)
 c.close()
-
