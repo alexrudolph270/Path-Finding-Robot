@@ -11,3 +11,11 @@ data = s.recv(64)
 print(data)
 
 s.send("sentFromClient".encode())
+
+outbound = "start" 
+
+while outbound != "quit":
+  outbound = raw_input("Enter command: ")
+  print("sending outbound: ",outbound)
+  s.send(outbound.encode())
+  
