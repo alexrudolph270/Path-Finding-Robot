@@ -46,6 +46,7 @@ def key_input(event):
 
 def end(event):
     print("Stop")
+    # stop()
 
 
 command = tk.Tk()
