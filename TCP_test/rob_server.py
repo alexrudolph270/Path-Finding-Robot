@@ -4,7 +4,7 @@ s = socket.socket()
 
 host = socket.gethostname()
 print(host)
-port = 8001 
+port = 8002 
 s.bind((host,port)) 
 
 s.listen(1)
