@@ -2,8 +2,8 @@ import socket
 
 s = socket.socket()
 
-host = socket.gethostname()
-port = 8001 
+host = "192.168.1.1"
+port = 8002 
 
 s.connect((host,port))
 
@@ -15,7 +15,7 @@ s.send("sentFromClient".encode())
 outbound = "start" 
 
 while outbound != "quit":
-  outbound = raw_input("Enter command: ")
+  outbound = input("Enter command: ")
   print("sending outbound: ",outbound)
   s.send(outbound.encode())
   
