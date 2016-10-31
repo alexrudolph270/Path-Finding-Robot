@@ -1,9 +1,12 @@
 #Server side code, this is the only thing that will run on the robot in our final version (if agreed upon)
+#Only code that will have the gopigo library imported
+
 #NOTE: When sending strings to this program through 'rob_client.py:send_command(str)' 
 #      str must be exactly what function you want
 #      example: send_command("enc_tgt(1,0,9)").
 #      eval() will treat the string as a function
 
+#from gopigo import *
 import socket
 
 s = socket.socket()
