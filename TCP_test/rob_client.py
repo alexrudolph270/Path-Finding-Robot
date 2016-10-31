@@ -4,7 +4,7 @@
 #NOTE: When sending strings to the server
 #      str must be exactly what function you want
 #      example: send_command("enc_tgt(1,0,9)") or send_command("fwd()")
-#      serverside has a function called eval(), it will treat the string as a function
+#      serverside has a function called exec(), it will treat the string as a function
 
 import socket
 s = socket.socket()
