@@ -47,7 +47,7 @@ end_y = current_y + 1   # robot should hopefully end one unit below its starting
 ## print('\n'.join([''.join(['{:4}'.format(item) for item in row]) for row in map_mtx]))
 ## Will be used, prints out the entire matrix
 
-def_mapmode():
+def map_mode():
     enable_encoders()
     set_speed(50)
     dist_front = us_dist(15)  ## enable the ultrasonic sensor(s)
