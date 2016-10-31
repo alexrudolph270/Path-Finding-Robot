@@ -1,5 +1,12 @@
-import socket
+#Client side code, this module will be imported throughtout each subsystem
+#When this is fully implemented, we will not have 'from gopigo import *' in any code except for rob_server.py
 
+#NOTE: When sending strings to the server
+#      str must be exactly what function you want
+#      example: send_command("enc_tgt(1,0,9)") or send_command("fwd()")
+#      serverside has a function called eval(), it will treat the string as a function
+
+import socket
 s = socket.socket()
 
 host = "192.168.1.1"
