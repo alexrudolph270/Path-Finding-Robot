@@ -26,7 +26,7 @@ print(inbound)
 
 while inbound != "quit":
   inbound = c.recv(64).decode("ascii") #receive sent string
-  print(inbound)
-  eval(inbound) #Eval takes a string and treats it as a function
+  print("Receiving string: " + inbound)
+  exec(inbound) #Eval takes a string and treats it as a function
 
 c.close()
