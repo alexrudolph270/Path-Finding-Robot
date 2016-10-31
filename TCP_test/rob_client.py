@@ -22,7 +22,7 @@ s.send("Client is connected".encode())
 outbound = "start" 
 
 while outbound != "quit":
-  outbound = input("Enter command: ")
+  outbound = raw_input("Enter command: ")
   send_command(outbound)
 #'''
   
