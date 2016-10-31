@@ -8,7 +8,7 @@ port = 8002
 s.connect((host,port))
 
 data = s.recv(64) #when connected will receive up to 64 bytes
-print(data)       #print received data, probably the IP address of server
+print(data)       #print received data, probably the address of the client
 s.send("Client is connected".encode())
 
 #'''
