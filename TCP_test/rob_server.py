@@ -4,7 +4,7 @@
 #NOTE: When sending strings to this program through 'rob_client.py:send_command(str)' 
 #      str must be exactly what function you want
 #      example: send_command("enc_tgt(1,0,9)").
-#      eval() will treat the string as a function
+#      exec() will treat the string as a function
 
 #from gopigo import *
 import socket
