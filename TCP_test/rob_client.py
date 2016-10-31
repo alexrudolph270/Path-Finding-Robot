@@ -16,18 +16,20 @@ s.connect((host,port))
 
 data = s.recv(64) #when connected will receive up to 64 bytes
 print(data)       #print received data, probably the address of the client
-s.send("Client is connected".encode())
+s.send("Connected to host".encode())
+
+ #simple function that will be used for every time you call a gopigo function
+def send_command( str_cmd ):
+  print("Sending string: " + str_cmd)
+  s.send(str_cmd.encode())
+  return
 
 #'''
 outbound = "start" 
 
 while outbound != "quit":
+  sleep(0.5)
   outbound = raw_input("Enter command: ")
   send_command(outbound)
 #'''
-  
-  #simple function that will be used for every time you call a gopigo function
-def send_command(str)
-  print("Sending string: ",str)
-  s.send(str.encode())
   
