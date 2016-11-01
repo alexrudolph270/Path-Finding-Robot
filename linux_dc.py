@@ -37,6 +37,7 @@ def key_input(event):
             print("Robot is moving backwards.")
             #bwd()
         
+        print("Key has not been released yet.")
         command.bind_all("<KeyRelease>", end)
 
 command = tk.Tk()
