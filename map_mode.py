@@ -21,7 +21,7 @@ map_mtx = [[0 for x in range(i)] for y in range(j)]
 ## 0 0 0 0 0 0
 ## 0 0 0 0 0 0
 ## 0 0 0 0 0 0
-## 
+##
 ## this code assumes the robot will start in the top left corner of the room
 ## robot will move clockwise around the room  (starts facing right, relative to the matrix)
 
@@ -48,11 +48,23 @@ end_y = current_y + 1   # robot should hopefully end one unit below its starting
 ## Will be used, prints out the entire matrix
 
 def map_mode():
+    global current_x
+    global current_y
+    global current_d
+    global end_x
+    global end_y
+    global RIGHT
+    global LEFT
+    global UP
+    global DOWN
+    global WALL
+    global MOVE_DIST
+    ######
     enable_encoders()
-    set_speed(50)
+    set_speed(100)
     dist_front = us_dist(15)  ## enable the ultrasonic sensor(s)
     dist_left = us_dist(10)   ## 15 = front, 10 = left
-    while current_x != end_x and current_y != end_y:
+    while current_x == end_x and current_y != end_y:
         if dist_left <= WALL: # wall to the left
             print("\nWall detected, adding to matrix", dist_left)
             if (current_d == UP):
@@ -68,7 +80,7 @@ def map_mode():
 
             if dist_front > WALL: # no wall in front
                 print("\nNo obstruction detected, moving forward", dist_front)
-                enc_tgt(1,1,move_dist)
+                enc_tgt(1,1,MOVE_DIST)
                 fwd()
                 time.sleep(3)
                 stop()
@@ -84,13 +96,13 @@ def map_mode():
                     current_x = current_x - 1
                 else:
                     printf("\nERROR: invalid direction")
-                    
+
             else: # wall in front
                 printf("\nObstruction detected, making right turn", dist_front)
                 enc_tgt(0,1,9)
                 right_rot()
                 time.sleep(3)
-                enc_tgt(1,1,move_dist)
+                enc_tgt(1,1,MOVE_DIST)
                 fwd()
                 time.sleep(3)
                 stop()
@@ -110,13 +122,13 @@ def map_mode():
                     current_x = current_y - 1
                 else:
                     printf("\nERROR: invalid direction")
-                
+
         else: # no wall to the left
             print("\nNo wall detected, making left turn", dist_left)
             enc_tgt(1,0,9)
             left_rot()
             time.sleep(3)
-            enc_tgt(1,1,move_dist)
+            enc_tgt(1,1,MOVE_DIST)
             fwd()
             time.sleep(3)
             stop()
