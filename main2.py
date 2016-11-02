@@ -15,6 +15,7 @@ import time
 
 #from gopigo import *
 ########################################################################
+
 class Direct(tk.Toplevel):
     """"""
     # ----------------------------------------------------------------------
@@ -27,34 +28,63 @@ class Direct(tk.Toplevel):
         self.first_key = None    # Initial key pressed.
         self.current_key = None  # Used to check if current key is same as initial.
 
+        # List of acceptable inputs.
+        self.accept = ['w', 'a', 's', 'd', 'q', 'e']
+
         #check self before rek self
         root.bind_all("<KeyPress>", self.key_input)
 
+        # Buttons
+        back = tk.Button(self, text = "Back", command = self.onClose).grid()
+
+    # ----------------------------------------------------------------------
     def key_input(self, event):
-        #print("key_input() is running")
+
         key_press = event.keysym.lower()
 
-        if key_press == 'w':
+        if key_press not in self.accept:
+            print(key_press, "is not a valid input! Stop.")
+            self.done = 1
+            #stop()
+        else:
             self.first_key = key_press
-            if self.done == 1:
-                self.done = 0
-                print("Robot is moving forward.")
-                # fwd()
-        elif key_press == 's':
-            self.first_key = key_press
-            if self.done == 1:
-                self.done = 0
-                print("Robot is moving backwards.")
-                # bwd()
+            if key_press == 'w':
+                if self.done == 1:
+                    self.done = 0
+                    print("Robot is moving forward.")
+                    #fwd()
+            elif key_press == 'a':
+                if self.done == 1:
+                    self.done = 0
+                    print("Robot is moving left.")
+                    #left()
+            elif key_press == 's':
+                if self.done == 1:
+                    self.done = 0
+                    print("Robot is moving backwards.")
+                    #bwd()
+            elif key_press == 'd':
+                if self.done == 1:
+                    self.done = 0
+                    print("Robot is moving right.")
+                    #right()
+            elif key_press == 'q':
+                if self.done == 1:
+                    self.done = 0
+                    print("Robot is rotating left.")
+                    #left_rot()
+            elif key_press == 'e':
+                if self.done == 1:
+                    self.done = 0
+                    print("Robot is rotating right.")
+                    #right_rot()
 
-        Thread(target=self.check).start()
+            Thread(target=self.check).start()
+
 
     def check(self):
-        #print("check() is running")
-        delay = 0.4
+        delay = 0.1
 
-        # set_input is not running for whatever reason.
-        # Only runs after check() is done.
         root.bind_all("<KeyPress>", self.set_input)
 
         time.sleep(delay)
@@ -62,33 +92,33 @@ class Direct(tk.Toplevel):
         print(self.current_key)
 
         if self.current_key == None:
+            # Robot will come to a stop.
             print("Stop the robot!")
             # stop()
             self.done = 1
 
-            # Comment out to run set_input().
             root.bind_all("<KeyPress>", self.key_input)
 
         elif self.current_key == self.first_key:
-            # print("Keep going in " + self.current_key + " direction.")
+            # Robot keeps going in current direction.
             self.current_key = None  # Resetting the key to None to wait for another input.
             self.check()
 
         else:
-            # print("Moving in a different direction.")
-            done = 1
+            # Changing directions.
+            self.done = 1
             root.bind_all("<KeyPress>", self.key_input)
 
-        #print("check() has stopped")
 
     def set_input(self, event):
-        #print("set_input() is running")
         key_press = event.keysym.lower()
         self.current_key = key_press
+
 
     def onClose(self):
         """"""
         self.destroy()
+        root.unbind_all("<KeyPress>")
         self.original_frame.show()
 
 
@@ -150,7 +180,6 @@ class Path(tk.Toplevel):
         # will eventually send list of coordinates to the 'directions' module
         print(self.path)
         print(self.orderindex)
-        path_mode(self.path)
     # Instantiation of grid and start buttons
 
 ########################################################################
@@ -203,13 +232,12 @@ class Menu(object):
         self.root.deiconify()
 
 #----------------------------------------------------------------------
-#if __name__ == "__main__":
-#    root = tk.Tk()
-#    root.geometry("800x600")
-#    main = Menu(root)
-#    root.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.geometry("800x600")
+    main = Menu(root)
+    root.mainloop()
 
-root = tk.Tk()
-root.geometry("800x600")
-main = Menu(root)
-root.mainloop()
+
+
+
