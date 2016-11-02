@@ -150,6 +150,7 @@ class Path(tk.Toplevel):
         # will eventually send list of coordinates to the 'directions' module
         print(self.path)
         print(self.orderindex)
+        path_mode(self.path)
     # Instantiation of grid and start buttons
 
 ########################################################################
