@@ -27,62 +27,70 @@ class Direct(tk.Toplevel):
         self.first_key = None    # Initial key pressed.
         self.current_key = None  # Used to check if current key is same as initial.
 
-        #command = tk.Tk()
         #check self before rek self
-        self.bind_all("<KeyPress>", self.key_input)
+        root.bind_all("<KeyPress>", self.key_input)
+
+    def key_input(self, event):
+        #print("key_input() is running")
+        key_press = event.keysym.lower()
+
+        if key_press == 'w':
+            self.first_key = key_press
+            if self.done == 1:
+                self.done = 0
+                print("Robot is moving forward.")
+                # fwd()
+        elif key_press == 's':
+            self.first_key = key_press
+            if self.done == 1:
+                self.done = 0
+                print("Robot is moving backwards.")
+                # bwd()
+
+        Thread(target=self.check).start()
 
     def check(self):
-        delay = 0.3
+        #print("check() is running")
+        delay = 0.4
 
-        self.bind_all("<KeyPress>", self.setInput)
+        # set_input is not running for whatever reason.
+        # Only runs after check() is done.
+        root.bind_all("<KeyPress>", self.set_input)
 
         time.sleep(delay)
 
         print(self.current_key)
+
         if self.current_key == None:
             print("Stop the robot!")
             # stop()
             self.done = 1
-            self.bind_all("<KeyPress>", self.key_input)
+
+            # Comment out to run set_input().
+            root.bind_all("<KeyPress>", self.key_input)
 
         elif self.current_key == self.first_key:
-            # print("Keep going in " + current_key + " direction.")
-            current_key = None  # Resetting the key to None to wait for another input.
+            # print("Keep going in " + self.current_key + " direction.")
+            self.current_key = None  # Resetting the key to None to wait for another input.
             self.check()
 
         else:
             # print("Moving in a different direction.")
             done = 1
-            self.bind_all("<KeyPress>", self.key_input)
+            root.bind_all("<KeyPress>", self.key_input)
 
-    def setInput(self, event):
+        #print("check() has stopped")
+
+    def set_input(self, event):
+        #print("set_input() is running")
         key_press = event.keysym.lower()
         self.current_key = key_press
-
-    def key_input(self, event):
-        key_press = event.keysym.lower()
-
-        # print(key_press)
-        if key_press == 'w':
-            self.first_key = key_press
-            if self.done == 1:
-                self.done = 0
-                #print("Robot is moving forward.")
-                # fwd()
-
-        elif key_press == 's':
-            self.first_key = key_press
-            if self.done == 1:
-                self.done = 0
-                #print("Robot is moving backwards.")
-                # bwd()
-
-        Thread(target=self.check()).start()
 
     def onClose(self):
         """"""
         self.destroy()
         self.original_frame.show()
+
 
 
 class Path(tk.Toplevel):
@@ -194,8 +202,13 @@ class Menu(object):
         self.root.deiconify()
 
 #----------------------------------------------------------------------
-if __name__ == "__main__":
-    root = tk.Tk()
-    root.geometry("800x600")
-    main = Menu(root)
-    root.mainloop()
+#if __name__ == "__main__":
+#    root = tk.Tk()
+#    root.geometry("800x600")
+#    main = Menu(root)
+#    root.mainloop()
+
+root = tk.Tk()
+root.geometry("800x600")
+main = Menu(root)
+root.mainloop()
