@@ -7,26 +7,45 @@
 #      exec() will treat the string as a function
 
 #from gopigo import *
-import socket
-
+import socket 
+from time import sleep
 s = socket.socket()
 
+MAX_COMMAND_SIZE = 25
+
 host = socket.gethostname() #Get the ip address of the robot itself
-print(host) #Print ip address
+print("Host IP: " + str(host)) #Print ip address
 port = 8002 #This port should be fine
+
+s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # <*> this fixes "address already in use"
 s.bind((host,port))  #I have a vauge idea of what this does
 
 s.listen(1) #We will only listen for one client
 c, addr = s.accept() #vauge idea of what this does
 
-c.send("Connected, your address is " + str(addr)) #Send the ip address of accepted client
+def receive_command():
+	inbound = c.recv(MAX_COMMAND_SIZE).decode()
+	print("Received string : " + inbound)
+	terminator = inbound.find("*")
+	if(terminator == -1):
+		return "quit"
+	print("Receiving alter : " + inbound[:terminator])
+	exec(inbound[:terminator])
+	return inbound[:terminator]
 
-inbound = c.recv(64).decode("ascii") #Receive "Client connected" message
+#handshake
+greeting = 'Connected, your address is ' + str(addr)
+c.send(greeting.encode()) #Send the ip address of accepted client
+
+inbound = c.recv(25).decode() #Receive "Hello Mr. Robot" message
 print(inbound)
+#receive_command()
+#handshake
 
-while inbound != "quit":
-  inbound = c.recv(64).decode("ascii") #receive sent string
-  print("Receiving string: " + inbound)
-  exec(inbound) #Eval takes a string and treats it as a function
+received = "start"
+
+while(received != "quit"):
+	received = receive_command()
+	print("loop:" + received + ":loop")
 
 c.close()
