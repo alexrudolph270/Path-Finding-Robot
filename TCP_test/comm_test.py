@@ -1,3 +1,4 @@
+#This program will test if send_command works correctly imported to a different python file 
 import rob_client
 from rob_client import *
 
