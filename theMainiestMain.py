@@ -19,7 +19,6 @@ import time
 
 class Direct(tk.Toplevel):
     """"""
-
     # ----------------------------------------------------------------------
     def __init__(self, original):
         print("Entering Direct Mode!")
@@ -28,11 +27,10 @@ class Direct(tk.Toplevel):
         tk.Toplevel.__init__(self)
         self.title("Direct Mode")
 
-        #self.geometry("300x300")
-
-        self.done = 1            # Check if robot is done moving.
-        self.first_key = None    # Initial key pressed.
-        self.current_key = None  # Used to check if current key is same as initial.
+        self.done = 1               # Check if robot is done moving.
+        self.first_key = None       # Initial key pressed.
+        self.current_key = None     # Used to check if current key is same as initial.
+        self.delay = 0.3            # Delay time for check().
 
         # List of acceptable inputs.
         self.accept = ['q', 'w', 'e', 'a', 's', 'd']
@@ -40,11 +38,15 @@ class Direct(tk.Toplevel):
         #check self before rek self
         root.bind_all("<KeyPress>", self.key_input)
 
-        # Buttons
-
+        # Instructions
         instructions = tk.Label(self, text="  ======================================  \n"
                                            "||  Control Rob the Robot with your KEYBOARD!  ||\n"
-                                           "  ======================================  ").grid(column = 1, columnspan = 11)
+                                           "  ======================================  ").grid(
+                                           column = 1,
+                                           columnspan = 11)
+
+
+
 
         input_w = tk.Label(self, text="W to move forward\n"
                                       "A to move left\n"
@@ -53,6 +55,7 @@ class Direct(tk.Toplevel):
                                       "Q to rotate left\n"
                                       "E to rotate right\n").grid(column = 1, columnspan = 11)
 
+        # Movement directions
         q_butt = tk.Label(self, text="Q").grid(row = 10, column = 5)
         w_butt = tk.Label(self, text="W").grid(row = 10, column = 6)
         e_butt = tk.Label(self, text="E").grid(row = 10, column = 7)
@@ -62,9 +65,40 @@ class Direct(tk.Toplevel):
 
         space = tk.Label(self, text="\n\n").grid()
 
-        back = tk.Button(self, text = "Back", command = self.onClose).grid(row = 12, column = 6)
+        # Allow user to change the delay value.
+        # Bug: Need to check for invalid input, such as letters.
+        # Also can't click out of entry box once clicked in.
+        #
+        # Possible solutions: Disable letters in entry box all-together?
+        # Have a button that says "set delay". When clicked, entry box shows
+        # up. After number is entered and set, entry box disappears and "set
+        # delay" button is back.
+
+        delay_text = tk.Label(self, text="Delay =").grid(row=12, column=5)
+        self.entry = StringVar(self, value=str(self.delay))
+        self.delay_box = tk.Entry(self, textvariable=self.entry, width=5).grid(row=12, column=6)
+        set = tk.Button(self, text="Set", command=self.set_delay).grid(row=12, column=7)
+
+        # Back button
+        back = tk.Button(self, text = "Back", command = self.onClose).grid(row = 13, column = 6)
+
+        # Pressing the x button will return to the Main Menu.
+        self.protocol('WM_DELETE_WINDOW', self.onClose)
 
     # ----------------------------------------------------------------------
+
+    '''
+    Set a new delay time.
+    '''
+    def set_delay(self):
+        self.delay = float(self.entry.get())
+        print("Setting delay to " + str(self.delay) + ".")
+
+    '''
+    This function will run if the user presses a key.
+    If the key is not a valid key, robot will stop and nothing will happen.
+    Otherwise, highlight key currently being pressed and move the robot.
+    '''
     def key_input(self, event):
         key_press = event.keysym.lower()
 
@@ -114,19 +148,20 @@ class Direct(tk.Toplevel):
 
             Thread(target=self.check).start()
 
-
+    '''
+    This function will determine if the robot should stop.
+    It stops if it receives None as an input after a delay (which may be set).
+    '''
     def check(self):
-        delay = 0.1
-
         root.bind_all("<KeyPress>", self.set_input)
 
-        time.sleep(delay)
+        time.sleep(self.delay)
 
         print(self.current_key)
 
+        # If current_key is None, robot will stop.
         if self.current_key == None:
             self.reset_colors()
-
             # Robot will come to a stop.
             print("Stop the robot!")
             # stop()
@@ -134,27 +169,35 @@ class Direct(tk.Toplevel):
 
             root.bind_all("<KeyPress>", self.key_input)
 
+        # Check if current_key is the same as the initial one. Keeps going if so.
         elif self.current_key == self.first_key:
             # Robot keeps going in current direction.
             self.current_key = None  # Resetting the key to None to wait for another input.
             self.check()
 
+        # If keys are different, then the direction is changing.
+        # Stop the robot before moving in another direction.
+        # Minor bug: Robot will not move in other direction if key is tapped once (must hold).
         else:
-            # Note: BUG - if you hold down a key and tap another key, the robot will not stop.
             self.reset_colors()
             # Changing directions.
             self.done = 1
-            #print("Stop the robot!")
+            print("Stop the robot!")
             #stop()
-            #self.check()
+
             root.bind_all("<KeyPress>", self.key_input)
 
 
+    '''
+    This function sets the current key to the one that is currently being pressed.
+    '''
     def set_input(self, event):
-        key_press = event.keysym.lower()
-        self.current_key = key_press
+        self.current_key = event.keysym.lower()
 
 
+    '''
+    This function should reset the highlights to default.
+    '''
     def reset_colors(self):
         color = "white"
         self.w_butt = tk.Label(self, text="W", bg=color).grid(row=10, column=6)
@@ -165,11 +208,24 @@ class Direct(tk.Toplevel):
         self.e_butt = tk.Label(self, text="E", bg=color).grid(row=10, column=7)
 
 
+    '''
+    This function should close out of Direct Mode.
+        - Robot will stop moving (if it isn't stopped already.)
+        - Will unbind current keys.
+        - Destroy frame and return to Main Menu.
+    '''
+    # Bug: Lots of errors if you exit in the middle of pressing a key.
+    # Thread still continues and frame is being destroyed before it ends.
     def onClose(self):
         """"""
+        # Stop the robot if it isn't already stopped.
+        if self.done != 1:
+            print("Exiting, stopping robot!")
+            #stop()
+
         print("Returning to Main Menu!")
-        self.destroy()
         root.unbind_all("<KeyPress>")
+        self.destroy()
         self.original_frame.show()
 
 
@@ -202,6 +258,9 @@ class Path(tk.Toplevel):
         back = tk.Button(self, text="Back", command=self.onClose).grid(
             column=(int(self.dimensions() / 2)+1), row=(self.dimensions()+1),
             columnspan=2)
+
+        # Pressing the x button will return to the Main Menu.
+        self.protocol('WM_DELETE_WINDOW', self.onClose)
 
     #----------------------------------------------------------------------
     def onClose(self):
