@@ -6,7 +6,7 @@
 #      example: send_command("enc_tgt(1,0,9)").
 #      exec() will treat the string as a function
 
-#from gopigo import *
+from gopigo import *
 import socket 
 from time import sleep
 s = socket.socket()
