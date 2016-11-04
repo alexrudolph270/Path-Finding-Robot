@@ -24,7 +24,8 @@ def send_command( str_cmd ):
 
 s = socket.socket()
 
-host = socket.gethostname()
+#host = socket.gethostname()
+host = "192.168.1.1"
 port = 8002 
 
 s.connect((host,port))
@@ -34,7 +35,7 @@ data = s.recv(32).decode() #when connected will receive up to 64 bytes
 print(data)       #print received data, probably the address of the client
 
 #s.send("Connected to host".encode())
-send_command("Hello Mr. Robot")
+send_command("Hello Mr. Robot".encode())
 #handshake
 
 
