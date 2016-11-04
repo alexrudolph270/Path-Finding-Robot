@@ -39,5 +39,5 @@ send_command("Hello Mr. Robot")
 
 
 send_command("print('f')")
-send_command("print('bonerfffff')")
+send_command("print('test true false')")
 
