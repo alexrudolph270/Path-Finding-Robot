@@ -3,6 +3,6 @@ from gopigo import *
 
 print("startup?")
 led_on()
-sleep(10)
+sleep(3)
 led_off()
 
