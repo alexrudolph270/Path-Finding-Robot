@@ -35,7 +35,7 @@ data = s.recv(32).decode() #when connected will receive up to 64 bytes
 print(data)       #print received data, probably the address of the client
 
 #s.send("Connected to host".encode())
-send_command("Hello Mr. Robot".encode())
+send_command("Hello Mr. Robot")
 #handshake
 
 
