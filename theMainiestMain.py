@@ -9,6 +9,7 @@
 ##  might put them in later, maybe...
 ###############################################################################
 import tkinter as tk
+from tkinter import *
 from functools import partial
 from threading import Thread
 import time
@@ -18,28 +19,53 @@ import time
 
 class Direct(tk.Toplevel):
     """"""
+
     # ----------------------------------------------------------------------
     def __init__(self, original):
+        print("Entering Direct Mode!")
         """Constructor"""
         self.original_frame = original
         tk.Toplevel.__init__(self)
         self.title("Direct Mode")
+
+        #self.geometry("300x300")
+
         self.done = 1            # Check if robot is done moving.
         self.first_key = None    # Initial key pressed.
         self.current_key = None  # Used to check if current key is same as initial.
 
         # List of acceptable inputs.
-        self.accept = ['w', 'a', 's', 'd', 'q', 'e']
+        self.accept = ['q', 'w', 'e', 'a', 's', 'd']
 
         #check self before rek self
         root.bind_all("<KeyPress>", self.key_input)
 
         # Buttons
-        back = tk.Button(self, text = "Back", command = self.onClose).grid()
+
+        instructions = tk.Label(self, text="  ======================================  \n"
+                                           "||  Control Rob the Robot with your KEYBOARD!  ||\n"
+                                           "  ======================================  ").grid(column = 1, columnspan = 11)
+
+        input_w = tk.Label(self, text="W to move forward\n"
+                                      "A to move left\n"
+                                      "S to move right\n"
+                                      "D to move backwards\n"
+                                      "Q to rotate left\n"
+                                      "E to rotate right\n").grid(column = 1, columnspan = 11)
+
+        q_butt = tk.Label(self, text="Q").grid(row = 10, column = 5)
+        w_butt = tk.Label(self, text="W").grid(row = 10, column = 6)
+        e_butt = tk.Label(self, text="E").grid(row = 10, column = 7)
+        a_butt = tk.Label(self, text="A").grid(row = 11, column = 5)
+        s_butt = tk.Label(self, text="S").grid(row = 11, column = 6)
+        d_butt = tk.Label(self, text="D").grid(row = 11, column = 7)
+
+        space = tk.Label(self, text="\n\n").grid()
+
+        back = tk.Button(self, text = "Back", command = self.onClose).grid(row = 12, column = 6)
 
     # ----------------------------------------------------------------------
     def key_input(self, event):
-
         key_press = event.keysym.lower()
 
         if key_press not in self.accept:
@@ -47,35 +73,42 @@ class Direct(tk.Toplevel):
             self.done = 1
             #stop()
         else:
+            color = "green"
             self.first_key = key_press
             if key_press == 'w':
                 if self.done == 1:
                     self.done = 0
+                    self.w_butt = tk.Label(self, text="W", bg=color).grid(row=10, column=6)
                     print("Robot is moving forward.")
                     #fwd()
             elif key_press == 'a':
                 if self.done == 1:
                     self.done = 0
+                    self.a_butt = tk.Label(self, text="A", bg=color).grid(row=11, column=5)
                     print("Robot is moving left.")
                     #left()
             elif key_press == 's':
                 if self.done == 1:
                     self.done = 0
+                    self.s_butt = tk.Label(self, text="S", bg=color).grid(row=11, column=6)
                     print("Robot is moving backwards.")
                     #bwd()
             elif key_press == 'd':
                 if self.done == 1:
                     self.done = 0
+                    self.d_butt = tk.Label(self, text="D", bg=color).grid(row=11, column=7)
                     print("Robot is moving right.")
                     #right()
             elif key_press == 'q':
                 if self.done == 1:
                     self.done = 0
+                    self.q_butt = tk.Label(self, text="Q", bg=color).grid(row=10, column=5)
                     print("Robot is rotating left.")
                     #left_rot()
             elif key_press == 'e':
                 if self.done == 1:
                     self.done = 0
+                    self.e_butt = tk.Label(self, text="E", bg=color).grid(row=10, column=7)
                     print("Robot is rotating right.")
                     #right_rot()
 
@@ -92,6 +125,8 @@ class Direct(tk.Toplevel):
         print(self.current_key)
 
         if self.current_key == None:
+            self.reset_colors()
+
             # Robot will come to a stop.
             print("Stop the robot!")
             # stop()
@@ -105,8 +140,13 @@ class Direct(tk.Toplevel):
             self.check()
 
         else:
+            # Note: BUG - if you hold down a key and tap another key, the robot will not stop.
+            self.reset_colors()
             # Changing directions.
             self.done = 1
+            #print("Stop the robot!")
+            #stop()
+            #self.check()
             root.bind_all("<KeyPress>", self.key_input)
 
 
@@ -115,8 +155,19 @@ class Direct(tk.Toplevel):
         self.current_key = key_press
 
 
+    def reset_colors(self):
+        color = "white"
+        self.w_butt = tk.Label(self, text="W", bg=color).grid(row=10, column=6)
+        self.a_butt = tk.Label(self, text="A", bg=color).grid(row=11, column=5)
+        self.s_butt = tk.Label(self, text="S", bg=color).grid(row=11, column=6)
+        self.d_butt = tk.Label(self, text="D", bg=color).grid(row=11, column=7)
+        self.q_butt = tk.Label(self, text="Q", bg=color).grid(row=10, column=5)
+        self.e_butt = tk.Label(self, text="E", bg=color).grid(row=10, column=7)
+
+
     def onClose(self):
         """"""
+        print("Returning to Main Menu!")
         self.destroy()
         root.unbind_all("<KeyPress>")
         self.original_frame.show()
