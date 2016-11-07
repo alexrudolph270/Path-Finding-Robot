@@ -65,7 +65,7 @@ def map_mode():
             start_y = current_y
             print("Start position is now (", start_x, ",", start_y, ")")
 
-    if (dist_front == WALL):
+    if (dist_front <= WALL):
         # turn right
         enc_tgt(0,1,9)
         right_rot()
@@ -176,7 +176,7 @@ def updatePos(move_direction)
     global current_y
     global current_d
 
-    if (move_direction = MOVE_FORWARD):
+    if (move_direction == MOVE_FORWARD):
         if (current_d == UP):
             current_y = current_y - 1
         elif (current_d == RIGHT):
@@ -190,7 +190,7 @@ def updatePos(move_direction)
 
         print("Current position is now (", current_x, ",", current_y, "); direction = ", current_d)
 
-    elif (move_direction = MOVE_RIGHT):
+    elif (move_direction == MOVE_RIGHT):
         if (current_d == UP):
             current_d = RIGHT
             current_x = current_x + 1
@@ -208,7 +208,7 @@ def updatePos(move_direction)
 
         print("Current position is now (", current_x, ",", current_y, "); direction = ", current_d)
         
-    elif (move_direction = MOVE_LEFT):
+    elif (move_direction == MOVE_LEFT):
         if (current_d == UP):
             current_d = LEFT
             current_y = current_x - 1
