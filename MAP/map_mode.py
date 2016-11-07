@@ -35,7 +35,6 @@ def map_mode():
     global current_d
     global start_x
     global start_y
-    global map_mtx
 
     # set speed of the robot, slower is probably more accurate
     set_speed(200)
@@ -65,7 +64,7 @@ def map_mode():
             start_y = current_y
             print("Start position is now (", start_x, ",", start_y, ")")
 
-    if (dist_front <= WALL):
+    if (dist_front == WALL):
         # turn right
         enc_tgt(0,1,9)
         right_rot()
@@ -74,16 +73,7 @@ def map_mode():
 
     ## the robot is now oriented to the wall
     # add adjacent wall to matrix
-    if (current_d == UP):
-        map_mtx[current_x - 1][current_y] = X
-    elif (current_d == RIGHT):
-        map_mtx[current_x][current_y - 1] = X
-    elif (current_d == DOWN):
-        map_mtx[current_x + 1][current_y] = X
-    elif (current_d == LEFT):
-        map_mtx[current_x][current_y + 1] = X
-    else:
-        print("ERROR: invalid direction")
+    addWall()
 
     ## now we move the robot one unit forward
     # move forward, and stop
@@ -106,16 +96,7 @@ def map_mode():
             print("Wall detected, adding to matrix; dist_left = ", dist_left)
 
             # update the matrix
-            if (current_d == UP):
-                map_mtx[current_x - 1][current_y] = X
-            elif (current_d == RIGHT):
-                map_mtx[current_x][current_y - 1] = X
-            elif (current_d == DOWN):
-                map_mtx[current_x + 1][current_y] = X
-            elif (current_d == LEFT):
-                map_mtx[current_x][current_y + 1] = X
-            else:
-                print("ERROR: invalid direction")
+            addWall()
 
             dist_front = us_dist(15) # get distance from front sensor
             if (dist_front > WALL): # no wall in front
@@ -170,13 +151,32 @@ def map_mode():
     print('\n'.join([''.join(['{:4}'.format(item) for item in row])
         for row in map_mtx]))
 
+def addWall()
+    # import globals that need to be modified
+    global map_mtx
+
+    if (current_d == UP):
+        map_mtx[current_x - 1][current_y] = X
+        print("(", current_x - 1, ",", current_y, ") added to matrix")
+    elif (current_d == RIGHT):
+        map_mtx[current_x][current_y - 1] = X
+        print("(", current_x, ",", current_y - 1, ") added to matrix")
+    elif (current_d == DOWN):
+        map_mtx[current_x + 1][current_y] = X
+        print("(", current_x + 1, ",", current_y, ") added to matrix")
+    elif (current_d == LEFT):
+        map_mtx[current_x][current_y + 1] = X
+        print("(", current_x, ",", current_y + 1, ") added to matrix")
+    else:
+        print("ERROR: invalid direction")
+
 def updatePos(move_direction)
     # import globals that need to be modified
     global current_x
     global current_y
     global current_d
 
-    if (move_direction == MOVE_FORWARD):
+    if (move_direction = MOVE_FORWARD):
         if (current_d == UP):
             current_y = current_y - 1
         elif (current_d == RIGHT):
@@ -190,7 +190,7 @@ def updatePos(move_direction)
 
         print("Current position is now (", current_x, ",", current_y, "); direction = ", current_d)
 
-    elif (move_direction == MOVE_RIGHT):
+    elif (move_direction = MOVE_RIGHT):
         if (current_d == UP):
             current_d = RIGHT
             current_x = current_x + 1
@@ -208,7 +208,7 @@ def updatePos(move_direction)
 
         print("Current position is now (", current_x, ",", current_y, "); direction = ", current_d)
         
-    elif (move_direction == MOVE_LEFT):
+    elif (move_direction = MOVE_LEFT):
         if (current_d == UP):
             current_d = LEFT
             current_y = current_x - 1
