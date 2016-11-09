@@ -39,48 +39,48 @@ class Direct(tk.Toplevel):
         root.bind_all("<KeyPress>", self.key_input)
 
         # Instructions
-        instructions = tk.Label(self, text="  ======================================  \n"
-                                           "||  Control Rob the Robot with your KEYBOARD!  ||\n"
-                                           "  ======================================  ").grid(
-                                           column = 1,
-                                           columnspan = 11)
-
-
-
-
-        input_w = tk.Label(self, text="W to move forward\n"
-                                      "A to move left\n"
-                                      "S to move right\n"
-                                      "D to move backwards\n"
-                                      "Q to rotate left\n"
-                                      "E to rotate right\n").grid(column = 1, columnspan = 11)
+        tk.Label(self, text="  ======================================  \n"
+                            "||  Control Rob the Robot with your KEYBOARD!  ||  \n"
+                            "  ======================================  ").grid(column = 1, columnspan = 11)
 
         # Movement directions
-        q_butt = tk.Label(self, text="Q").grid(row = 10, column = 5)
-        w_butt = tk.Label(self, text="W").grid(row = 10, column = 6)
-        e_butt = tk.Label(self, text="E").grid(row = 10, column = 7)
-        a_butt = tk.Label(self, text="A").grid(row = 11, column = 5)
-        s_butt = tk.Label(self, text="S").grid(row = 11, column = 6)
-        d_butt = tk.Label(self, text="D").grid(row = 11, column = 7)
+        tk.Label(self, text="W to move forward\n"
+                            "A to move left\n"
+                            "S to move right\n"
+                            "D to move backwards\n"
+                            "Q to rotate left\n"
+                            "E to rotate right\n").grid(column = 1, columnspan = 11)
 
-        space = tk.Label(self, text="\n\n").grid()
+        # Movement indicator
+        tk.Label(self, text="Q").grid(row = 10, column = 5)
+        tk.Label(self, text="W").grid(row = 10, column = 6)
+        tk.Label(self, text="E").grid(row = 10, column = 7)
+        tk.Label(self, text="A").grid(row = 11, column = 5)
+        tk.Label(self, text="S").grid(row = 11, column = 6)
+        tk.Label(self, text="D").grid(row = 11, column = 7)
+
+        # Space
+        tk.Label(self, text="\n\n").grid()
 
         # Allow user to change the delay value.
-        # Bug: Need to check for invalid input, such as letters.
-        # Also can't click out of entry box once clicked in.
-        #
-        # Possible solutions: Disable letters in entry box all-together?
-        # Have a button that says "set delay". When clicked, entry box shows
-        # up. After number is entered and set, entry box disappears and "set
-        # delay" button is back.
-
-        delay_text = tk.Label(self, text="Delay =").grid(row=12, column=5)
+        tk.Label(self, text="Delay =").grid(row=12, column=5)
         self.entry = StringVar(self, value=str(self.delay))
-        self.delay_box = tk.Entry(self, textvariable=self.entry, width=5).grid(row=12, column=6)
-        set = tk.Button(self, text="Set", command=self.set_delay).grid(row=12, column=7)
+
+        # Check if entry is valid number.
+        vcmd = (self.register(self.onValidate), '%P')
+
+        # Entry box. Default delay is set initially.
+        self.delay_box = tk.Entry(self, textvariable=self.entry, width=5, validate="key",
+                                  validatecommand = vcmd).grid(row=12, column=6)
+
+        # Set delay button
+        tk.Button(self, text="Set", command=self.set_delay).grid(row=12, column=7)
 
         # Back button
-        back = tk.Button(self, text = "Back", command = self.onClose).grid(row = 13, column = 6)
+        tk.Button(self, text = "Back", command = self.onClose).grid(row = 13, column = 6)
+
+        # Space
+        tk.Label(self, text="\n").grid()
 
         # Pressing the x button will return to the Main Menu.
         self.protocol('WM_DELETE_WINDOW', self.onClose)
@@ -88,10 +88,26 @@ class Direct(tk.Toplevel):
     # ----------------------------------------------------------------------
 
     '''
+    Check if what is being typed in the entry box is a number.
+    '''
+    def onValidate(self, delay_value):
+        # Add 0 in front to allow user to backspace all the way and clear the box.
+        delay_value = "0" + delay_value
+        try:
+            float(delay_value)
+            return True
+        except ValueError:
+            return False
+
+    '''
     Set a new delay time.
     '''
     def set_delay(self):
-        self.delay = float(self.entry.get())
+        try:
+            self.delay = float(self.entry.get())
+        except:
+            self.delay = 0
+
         print("Setting delay to " + str(self.delay) + ".")
 
     '''
@@ -103,7 +119,7 @@ class Direct(tk.Toplevel):
         key_press = event.keysym.lower()
 
         if key_press not in self.accept:
-            print(key_press, "is not a valid input! Stop.")
+            #print(key_press, "is not a valid input! Stop.")
             self.done = 1
             #stop()
         else:
@@ -112,37 +128,37 @@ class Direct(tk.Toplevel):
             if key_press == 'w':
                 if self.done == 1:
                     self.done = 0
-                    self.w_butt = tk.Label(self, text="W", bg=color).grid(row=10, column=6)
+                    tk.Label(self, text="W", bg=color).grid(row=10, column=6)
                     print("Robot is moving forward.")
                     #fwd()
             elif key_press == 'a':
                 if self.done == 1:
                     self.done = 0
-                    self.a_butt = tk.Label(self, text="A", bg=color).grid(row=11, column=5)
+                    tk.Label(self, text="A", bg=color).grid(row=11, column=5)
                     print("Robot is moving left.")
                     #left()
             elif key_press == 's':
                 if self.done == 1:
                     self.done = 0
-                    self.s_butt = tk.Label(self, text="S", bg=color).grid(row=11, column=6)
+                    tk.Label(self, text="S", bg=color).grid(row=11, column=6)
                     print("Robot is moving backwards.")
                     #bwd()
             elif key_press == 'd':
                 if self.done == 1:
                     self.done = 0
-                    self.d_butt = tk.Label(self, text="D", bg=color).grid(row=11, column=7)
+                    tk.Label(self, text="D", bg=color).grid(row=11, column=7)
                     print("Robot is moving right.")
                     #right()
             elif key_press == 'q':
                 if self.done == 1:
                     self.done = 0
-                    self.q_butt = tk.Label(self, text="Q", bg=color).grid(row=10, column=5)
+                    tk.Label(self, text="Q", bg=color).grid(row=10, column=5)
                     print("Robot is rotating left.")
                     #left_rot()
             elif key_press == 'e':
                 if self.done == 1:
                     self.done = 0
-                    self.e_butt = tk.Label(self, text="E", bg=color).grid(row=10, column=7)
+                    tk.Label(self, text="E", bg=color).grid(row=10, column=7)
                     print("Robot is rotating right.")
                     #right_rot()
 
@@ -200,12 +216,12 @@ class Direct(tk.Toplevel):
     '''
     def reset_colors(self):
         color = "white"
-        self.w_butt = tk.Label(self, text="W", bg=color).grid(row=10, column=6)
-        self.a_butt = tk.Label(self, text="A", bg=color).grid(row=11, column=5)
-        self.s_butt = tk.Label(self, text="S", bg=color).grid(row=11, column=6)
-        self.d_butt = tk.Label(self, text="D", bg=color).grid(row=11, column=7)
-        self.q_butt = tk.Label(self, text="Q", bg=color).grid(row=10, column=5)
-        self.e_butt = tk.Label(self, text="E", bg=color).grid(row=10, column=7)
+        tk.Label(self, text="W", bg=color).grid(row=10, column=6)
+        tk.Label(self, text="A", bg=color).grid(row=11, column=5)
+        tk.Label(self, text="S", bg=color).grid(row=11, column=6)
+        tk.Label(self, text="D", bg=color).grid(row=11, column=7)
+        tk.Label(self, text="Q", bg=color).grid(row=10, column=5)
+        tk.Label(self, text="E", bg=color).grid(row=10, column=7)
 
 
     '''
