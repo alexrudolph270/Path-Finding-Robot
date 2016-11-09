@@ -9,7 +9,7 @@
 import socket
 from time import sleep
 
-MAX_COMMAND_SIZE = 25
+MAX_COMMAND_SIZE = 50
 
  #simple function that will be used for every time you call a gopigo function
 def send_command( str_cmd ):
@@ -31,14 +31,16 @@ port = 8002
 s.connect((host,port))
 
 #handshake
-data = s.recv(32).decode() #when connected will receive up to 64 bytes
+data = s.recv(MAX_COMMAND_SIZE).decode() #when connected will receive up to 64 bytes
 print(data)       #print received data, probably the address of the client
 
 #s.send("Connected to host".encode())
 send_command("Hello Mr. Robot")
 #handshake
 
-
+test=23
+string_e = str(23)
+send_command("print(" + string_e + ")")
 send_command("print('f')")
 send_command("print('test true false')")
 
