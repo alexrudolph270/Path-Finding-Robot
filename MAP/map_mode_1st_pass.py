@@ -1,5 +1,5 @@
 ## First pass at implementing the auto-map-mode with the sonic sensors
-## fucking here goes nothing
+## here goes nothing
 ## Alex Rudolph
 
 ## At its most base, this should allow the robot to move until it perceives an
