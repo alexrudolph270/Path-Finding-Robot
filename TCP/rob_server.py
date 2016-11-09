@@ -11,7 +11,7 @@ import socket
 from time import sleep
 s = socket.socket()
 
-MAX_COMMAND_SIZE = 25
+MAX_COMMAND_SIZE = 50
 
 host = "192.168.1.1"
 #host = socket.gethostname() #Get the ip address of the robot itself
