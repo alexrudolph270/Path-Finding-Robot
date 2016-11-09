@@ -38,7 +38,7 @@ def receive_command():
 greeting = 'Connected, your address is ' + str(addr)
 c.send(greeting.encode()) #Send the ip address of accepted client
 
-inbound = c.recv(25).decode() #Receive "Hello Mr. Robot" message
+inbound = c.recv(MAX_COMMAND_SIZE).decode() #Receive "Hello Mr. Robot" message
 print(inbound)
 #receive_command()
 #handshake
