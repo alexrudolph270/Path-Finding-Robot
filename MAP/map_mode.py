@@ -29,7 +29,7 @@ start_x = -1
 start_y = -1
 
 def map_mode():
-    # import globals that need to be modified (read-only variables don't need to be imported)
+    # import globals that need to be modified  (read-only variables don't need to be imported)
     global current_x
     global current_y
     global current_d
