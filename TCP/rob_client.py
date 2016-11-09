@@ -21,6 +21,12 @@ def send_command( str_cmd ):
 	print("Sending string <" + str_cmd + "> of size " + str(len(str_cmd))) #orginal string padded
 	s.send(str_cmd.encode()) #SEND
 	return
+'''
+def server_mapmode()
+	matrix = map_mode()
+	matrix_string = str(matrix)
+	s.send(matrix_string.encode())
+'''
 
 s = socket.socket()
 
@@ -43,4 +49,3 @@ string_e = str(23)
 send_command("print(" + string_e + ")")
 send_command("print('f')")
 send_command("print('test true false')")
-
