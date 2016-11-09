@@ -31,7 +31,12 @@ def receive_command():
 	if(terminator == -1):
 		return "quit"
 	print("Receiving alter : " + inbound[:terminator])
-	exec(inbound[:terminator])
+	'''
+	if(inbound == "mapmode()"):
+		server_mapmode()
+	else
+		exec(inbound[:terminator])
+	'''
 	return inbound[:terminator]
 
 #handshake
