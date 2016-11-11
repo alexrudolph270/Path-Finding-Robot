@@ -245,7 +245,7 @@ class Direct(tk.Toplevel):
         self.original_frame.show()
 
 
-
+###########################################################################
 class Path(tk.Toplevel):
     """"""
     #----------------------------------------------------------------------
@@ -291,14 +291,15 @@ class Path(tk.Toplevel):
         #function to do stuff with index of button on grid/list
         global orderindex #needed to access global variable
         but = self.pathButtons[x][y] #acces button from grid buttons
-        if(but.cget('text') == self.orderindex): # if button has text tag
-            but.configure(text=" ") #set it blank
-            self.path.pop() #remove last patth[] element (coordinate)
-            self.orderindex -= 1
-        elif(but.cget('text') == ' '):
-            but.configure(text=self.orderindex+1) #add order index to button text tag
-            self.path.append([x, y]) #append
-            self.orderindex += 1
+        if((not self.path) or (self.path[self.orderindex-1][0] == x or self.path[self.orderindex-1][1] == y)):    
+            if(but.cget('text') == self.orderindex): # if button has text tag
+                but.configure(text=" ") #set it blank
+                self.path.pop() #remove last patth[] element (coordinate)
+                self.orderindex -= 1
+            elif(but.cget('text') == ' '):
+                but.configure(text=self.orderindex+1) #add order index to button text tag
+                self.path.append([x, y]) #append
+                self.orderindex += 1
 
     def clickstart(self):
         # executes start button function(s)
