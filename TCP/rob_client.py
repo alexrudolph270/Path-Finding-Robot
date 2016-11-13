@@ -54,8 +54,10 @@ print(data)       #print received data, probably the address of the client
 send_command("Hello Mr. Robot")
 #handshake
 
+'''
 send_command("print('f')")
 m = request_map_mode()
 print("matrix received" + str(m))
 send_command("print('gg')")
+'''
 
