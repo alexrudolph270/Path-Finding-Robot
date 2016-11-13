@@ -15,6 +15,7 @@ from threading import Thread
 import time
 import rob_client
 from rob_client import *
+from path_mode import *
 
 #from gopigo import *
 ########################################################################
@@ -322,6 +323,7 @@ class Path(tk.Toplevel):
         # will eventually send list of coordinates to the 'directions' module
         print(self.path)
         print(self.orderindex)
+        path_mode(self.path)
     # Instantiation of grid and start buttons
 
 
