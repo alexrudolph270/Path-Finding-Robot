@@ -335,7 +335,7 @@ class Map(tk.Toplevel):
         tk.Toplevel.__init__(self)
         self.title("Map Mode")
 
-        send_command("map_mode()")
+        request_map_mode()
 
         # Pressing the x button will return to the Main Menu.
         self.protocol('WM_DELETE_WINDOW', self.onClose)
