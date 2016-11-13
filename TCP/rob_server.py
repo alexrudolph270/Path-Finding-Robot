@@ -6,7 +6,7 @@
 #      example: send_command("enc_tgt(1,0,9)").
 #      exec() will treat the string as a function
 
-from gopigo import *
+#from gopigo import *
 import socket 
 from time import sleep
 s = socket.socket()
@@ -24,19 +24,41 @@ s.bind((host,port))  #I have a vauge idea of what this does
 s.listen(1) #We will only listen for one client
 c, addr = s.accept() #vauge idea of what this does
 
+def map_mode():
+	m = [[1,2,3],[4,5,6],[7,8,9],[4,4,4]]
+	return m
+
+def server_mapmode():
+	print("server_mapmode activated")
+
+	#get the matrix map mode returns
+	matrix = map_mode()
+
+	#convert to a string
+	matrix_string = str(matrix)
+	print("server: " + matrix_string)
+	
+	#send how many bytes the matrix string will be
+	matrix_string_size = str(len(matrix_string))
+	for i in range(0,8 - len(matrix_string_size)): 	#padding
+		matrix_string_size += " " 
+
+	c.send(matrix_string_size.encode())
+
+	#send the matrix string
+	c.send(matrix_string.encode())
+
 def receive_command():
 	inbound = c.recv(MAX_COMMAND_SIZE).decode()
 	print("Received string : " + inbound)
 	terminator = inbound.find("*")
 	if(terminator == -1):
 		return "quit"
+
 	print("Receiving alter : " + inbound[:terminator])
-	'''
-	if(inbound == "mapmode()"):
-		server_mapmode()
-	else
-		exec(inbound[:terminator])
-	'''
+
+	exec(inbound[:terminator])
+
 	return inbound[:terminator]
 
 #handshake
@@ -55,3 +77,4 @@ while(received != "quit"):
 	print("loop:" + received + ":loop")
 
 c.close()
+

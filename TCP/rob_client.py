@@ -20,13 +20,23 @@ def send_command( str_cmd ):
 
 	print("Sending string <" + str_cmd + "> of size " + str(len(str_cmd))) #orginal string padded
 	s.send(str_cmd.encode()) #SEND
-	return
-'''
-def server_mapmode()
-	matrix = map_mode()
-	matrix_string = str(matrix)
-	s.send(matrix_string.encode())
-'''
+	#return
+
+
+def request_map_mode():
+	#let the server know we want to activate map mode
+	send_command("server_mapmode()")
+
+	bytes_string = s.recv(8).decode()
+	print("string: " + bytes_string + " cast as int: " + str(int(bytes_string)))
+	
+	matrix_string = s.recv(int(bytes_string)).decode()
+	print(matrix_string)
+
+	matrix = []
+	exec("matrix = " + matrix_string)
+	#return the matrix to the GUI so it can be displayed
+	return matrix
 
 s = socket.socket()
 
@@ -44,8 +54,8 @@ print(data)       #print received data, probably the address of the client
 send_command("Hello Mr. Robot")
 #handshake
 
-test=23
-string_e = str(23)
-send_command("print(" + string_e + ")")
 send_command("print('f')")
-send_command("print('test true false')")
+m = request_map_mode()
+print("matrix received" + str(m))
+send_command("print('gg')")
+
