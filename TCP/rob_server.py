@@ -50,12 +50,12 @@ def server_mapmode():
 
 def receive_command():
 	inbound = c.recv(MAX_COMMAND_SIZE).decode()
-	print("Received string : " + inbound)
+	#print("Received string : " + inbound)
 	terminator = inbound.find("*")
 	if(terminator == -1):
 		return "quit"
 
-	print("Receiving alter : " + inbound[:terminator])
+	#print("Receiving alter : " + inbound[:terminator])
 
 	exec(inbound[:terminator])
 
@@ -74,7 +74,7 @@ received = "start"
 
 while(received != "quit"):
 	received = receive_command()
-	print("loop:" + received + ":loop")
+	print("Received and executed: " + received)
 
 c.close()
 
