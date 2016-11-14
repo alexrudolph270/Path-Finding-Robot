@@ -92,7 +92,9 @@ def path_mode(path = []):
 	#default_location = [int(dimensions() / 2) , int(dimensions() / 2)]
 	default_location = [1,1]
 	
-	location = default_location
+	#location = default_location
+	location = path[0] #starting location is the first member in set of coordinates
+	path.pop(0)
 	print ("Default location is ",default_location)
 	#python is so slick you don't even need a /n for nextline, but what if I didn't want it? ug?
 
