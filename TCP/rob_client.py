@@ -18,7 +18,7 @@ def send_command( str_cmd ):
 	for i in range(0,MAX_COMMAND_SIZE - len(str_cmd)): #padding the string by message_size - len(str) amount
 		str_cmd += "*"  
 
-	print("Sending string <" + str_cmd + "> of size " + str(len(str_cmd))) #orginal string padded
+	#print("Sending string <" + str_cmd + "> of size " + str(len(str_cmd))) #orginal string padded
 	s.send(str_cmd.encode()) #SEND
 	#return
 
