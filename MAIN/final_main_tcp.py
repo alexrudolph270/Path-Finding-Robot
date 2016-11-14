@@ -15,7 +15,7 @@ from threading import Thread
 import time
 import rob_client
 from rob_client import *
-from path_mode import *
+from path_mode_tcp import *
 
 #from gopigo import *
 ########################################################################
