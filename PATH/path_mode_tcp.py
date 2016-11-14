@@ -70,7 +70,7 @@ def orient(theta, dif = []):
 	#~~~~robot stuff~~~~
 	send_command("set_speed(100)") #robot will go half as slow as default
 	#enc_tgt(1,1,int(rotate * 0.1))
-	send_command("enc_tgt(1,1,int(" +str(rotate * 0.1)) + "))" )		
+	send_command("enc_tgt(1,1,int(" +str(rotate * 0.1) + "))" )		
 	send_command("right_rot()")
 	send_command("set_speed(200)") #change speed back
 	#~~~~~~~~~~~~~~~~~~~~
