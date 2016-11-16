@@ -1,0 +1,8 @@
+List of materials and website sources used during development:
+
+* GoPiGO Library & assembly: http://www.dexterindustries.com/gopigo2-tutorials-documentation/
+* Python coding examples and execution: http://www.dexterindustries.com/GoPiGo/programming/python-programming-for-the-raspberry-pi-gopigo/
+* How we implemented ad-hoc on the pi: http://slicepi.com/creating-an-ad-hoc-network-for-your-raspberry-pi/
+* Documentation for tkinter: http://effbot.org/tkinterbook/tkinter-events-and-bindings.htm
+* The internet of thiings server used for remote control: https://www.remot3.it/web/remot3-it-is-the-new-weaved.html
+* The server/client lab from CSUCI Networking course
