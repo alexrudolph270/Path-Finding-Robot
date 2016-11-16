@@ -26,10 +26,6 @@ s.bind((host,port))  #I have a vauge idea of what this does
 s.listen(1) #We will only listen for one client
 c, addr = s.accept() #vauge idea of what this does
 
-def map_mode():
-	m = [[1,2,3],[4,5,6],[7,8,9],[4,4,4]]
-	return m
-
 def server_mapmode():
 	print("server_mapmode activated")
 
