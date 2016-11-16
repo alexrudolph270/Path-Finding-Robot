@@ -9,6 +9,8 @@
 #from gopigo import *
 import socket 
 from time import sleep
+import map_mode_tcp
+from map_mode_tcp import *
 s = socket.socket()
 
 MAX_COMMAND_SIZE = 50
