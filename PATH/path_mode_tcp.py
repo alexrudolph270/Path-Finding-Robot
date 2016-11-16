@@ -15,6 +15,7 @@ Changes as of November 12
 
 import time
 import math
+from rob_client import *
 #from gopigo import *
 
 #test paths
