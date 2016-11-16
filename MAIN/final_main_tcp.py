@@ -17,6 +17,7 @@ import rob_client
 from rob_client import *
 from path_mode_tcp import *
 
+
 #from gopigo import *
 ########################################################################
 
@@ -335,7 +336,7 @@ class Map(tk.Toplevel):
         tk.Toplevel.__init__(self)
         self.title("Map Mode")
 
-        matrix = request_map_mode()
+        send_command("server_mapmode()")
 
         # Pressing the x button will return to the Main Menu.
         self.protocol('WM_DELETE_WINDOW', self.onClose)
