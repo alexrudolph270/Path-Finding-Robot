@@ -1,5 +1,5 @@
 '''
-Algoritm to describe the method of movement for path_mode for robot
+Algorithm to describe the method of movement for path_mode for robot
 Given a list of coordinates, it performs operations to move the robot physically
 	accross the floor, adhering to a virtual predefined matrix
 	
@@ -36,7 +36,8 @@ def orient(theta, dif = []):
 	#                    180 v bottom of matrix
 	# Pedro proposes we set 0 degrees to be the right of matrix, 
 	# this aligns with standardized way of presenting the unit circle
-	
+
+	next_theta = 0
 	
 	#Finds what direction we need to face to move to next coordinate
 	#Uses the difference between next location and current location
@@ -71,7 +72,7 @@ def orient(theta, dif = []):
 	#~~~~robot stuff~~~~
 	send_command("set_speed(100)") #robot will go half as slow as default
 	#enc_tgt(1,1,int(rotate * 0.1))
-	send_command("enc_tgt(1,1,int(" +str(rotate * 0.1) + "))" )		
+	send_command("enc_tgt(1,1,int(" +str(rotate * 0.1) + "))")
 	send_command("right_rot()")
 	send_command("set_speed(200)") #change speed back
 	#~~~~~~~~~~~~~~~~~~~~
@@ -91,11 +92,11 @@ def dimensions():
 def path_mode(path = []):
 	#default starting location will be in the middle of matrix
 	#default_location = [int(dimensions() / 2) , int(dimensions() / 2)]
-	default_location = [1,1]
+	default_location = path[0]
+
+    #path.pop(0)
 	
-	#location = default_location
-	location = path[0] #starting location is the first member in set of coordinates
-	path.pop(0)
+	location = default_location
 	print ("Default location is ",default_location)
 	#python is so slick you don't even need a /n for nextline, but what if I didn't want it? ug?
 
@@ -164,4 +165,3 @@ def path_mode(path = []):
 	
 #If running path_mode function from another file, comment this out
 #path_mode(path)
-
