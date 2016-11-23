@@ -138,14 +138,14 @@ class Direct(tk.Toplevel):
                     dist = us_dist(15)
                     print("Distance:", dist)
                     if dist <= self.wall:
-                        stop()
+                        send_command("stop()")
                     elif self.done == 1:
                         self.done = 0
                         tk.Label(self, text="W", bg=color).grid(row=10, column=6)
                         print("Robot is moving forward.")
                         send_command("fwd()")
                         #fwd()
-                elif key_press == 'a':
+            elif key_press == 'a':
                 if self.done == 1:
                     self.done = 0
                     tk.Label(self, text="A", bg=color).grid(row=11, column=5)
@@ -214,7 +214,7 @@ class Direct(tk.Toplevel):
             # Prevent robot from crashing into the wall if holding w.
             if self.current_key == "w":
                 if dist <= self.wall:
-                    stop()
+                    send_command("stop()")
                     self.done = 1
 
                     root.bind_all("<KeyPress>", self.key_input)
