@@ -134,17 +134,16 @@ class Direct(tk.Toplevel):
             color = "green"
             self.first_key = key_press
             if key_press == 'w':
-                if self.done == 1:
-                    dist = us_dist(15)
-                    print("Distance:", dist)
-                    if dist <= self.wall:
-                        send_command("stop()")
-                    elif self.done == 1:
-                        self.done = 0
-                        tk.Label(self, text="W", bg=color).grid(row=10, column=6)
-                        print("Robot is moving forward.")
-                        send_command("fwd()")
-                        #fwd()
+                dist = us_dist(15)
+                print("Distance:", dist)
+                if dist <= self.wall:
+                    send_command("stop()")
+                elif self.done == 1:
+                    self.done = 0
+                    tk.Label(self, text="W", bg=color).grid(row=10, column=6)
+                    print("Robot is moving forward.")
+                    send_command("fwd()")
+                    #fwd()
             elif key_press == 'a':
                 if self.done == 1:
                     self.done = 0
