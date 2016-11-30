@@ -1,3 +1,11 @@
+#Version Date: November 29th, 2016
+#Alexander Rudolph
+#Alinda Heng
+#Bailey Durkin
+#Nicholas Rocksvold
+#Pedro de los Reyes
+#Stormon Force
+
 '''
 Algorithm to describe the method of movement for path_mode for robot
 Given a list of coordinates, it performs operations to move the robot physically
