@@ -13,8 +13,8 @@ from tkinter import *
 from functools import partial
 from threading import Thread
 import time
-import rob_client
-from rob_client import *
+import rob_client_evo
+from rob_client_evo import *
 from path_mode_tcp import *
 
 
