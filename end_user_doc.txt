@@ -9,25 +9,33 @@ c)  On you own computer, run realvnc viewer (or download 		https://www.realvnc.c
 d)  Enter the IP address of the robot, 192.168.1.1 in the realvnc viewer, then hit enter
 e)  The enter the login info for the robot.  Username: pi  Password: robot_pi
 	This login info is the same for any operations done on the pi itself.
-f)  Congratulations, you have logged into the robot successfully.  Now you can either run commands 	directly on the robot, or load the MAIN on another computer that is also connected to the 	RPwireless and begin controlling the robot.
+f)  Congratulations, you have logged into the robot successfully.  Now you can either run commands directly on the robot, or load the MAIN on another computer that is also connected to the 	RPwireless and begin controlling the robot.
 
 2)  Turning on the server on the robot
-a)  Once you are logged into the robot via realvnc, open the terminal.  To do this, click on the terminal I	con (looks like a blank monitor) located at the top of the desktop.
+a)  Once you are logged into the robot via realvnc, open the terminal.  To do this, click on the terminal Icon (looks like a blank monitor) located at the top of the desktop.
 b)  Once you are in the terminal, you’ll need to navigate to the folder where the server file is located.  	In the terminal, type in $ cd Desktop/Robot_Operation/TCP hit enter.  Type $ ls to see which 	files are contained here.  You want to run rob_server.py
 c)  In the terminal, enter $ python rob_server
-d)  After entering, you should see output showing the ip address of the robot.  This means the server is 	active.
+d)  After entering, you should see output showing the ip address of the robot.  This means the server is active.
 
 3)  Using the main client
 a)  Now that the server is running you can open up the MAIN file on a computer connected to the  	RPwireless connection.  
-b)   Locate the file in your system (we recommend putting the file in a folder on your desktop).  In a t	erminal, execute the final_main_tcp.py file.  
+b)   Locate the file in your system (we recommend putting the file in a folder on your desktop).  In a terminal, execute the final_main_tcp.py file.  
 c)  This will bring up the tkinter main gui.  There are three selections available.
 -  Direct Control:  move the robot using the w/a/s/d/q/e keys
 -  Path Mode:  draw a path using the provided matrix.  Click a tile to give it a number, and the robot 	will follow the given path.
 -  Map Mode:  The robot will move forward until it detects a wall, then it will attempt to map out the 	area of the room it is in.
 
 4)  Turning off the robot
-a)  To turn off the robot, navigate to the menu and select shut down, then select shutdown again from 	the popup menu.
-b)  Alternatively, from the terminal, you can enter $ sudo poweroff to shutdown the robot from the t	erminal.
+a)  To turn off the robot, navigate to the menu and select shut down, then select shutdown again from the popup menu.
+b)  Alternatively, from the terminal, you can enter $ sudo poweroff to shutdown the robot from the terminal.
+
+extra) Resizing the vnc viewer window
+1) If you want to resize the vnc viewer window, open up the terminal and type in: vncserver -geometry [size]x[size], then hit enter.
+	Size corresponds to pixel ratio, so if you want, for example, 1280x720 or 980x480, this is where you would eneter it.
+2) Once you hit enter, a block of text will show up in the terminal, the end of which will contain the IP extension to your new window.
+	For example, the most common extension if this is the first size revision since the robot started up, the address will be 		"xxx.xxx.x.x:2"
+3)  Exit your current viewer window and log back into vncviewer, but this time add the ":number" to the end of the entered IP address.
+	Once you have logged back in, your window size should be adjusted accordingly.
 
 
 
