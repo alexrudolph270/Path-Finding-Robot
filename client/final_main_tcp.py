@@ -1,3 +1,10 @@
+#Version Date: November 29th, 2016
+#Alexander Rudolph
+#Alinda Heng
+#Bailey Durkin
+#Nicholas Rocksvold
+#Pedro de los Reyes
+#Stormon Force
 ###############################################################################
 ## Gui interface classes
 ## Made with reference to http://www.blog.pythonlibrary.org/2012/07/26/
