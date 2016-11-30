@@ -1,4 +1,11 @@
-## Bailey Durkin & Alex Rudolph
+#Version Date: November 29th, 2016
+#Alexander Rudolph
+#Alinda Heng
+#Bailey Durkin
+#Nicholas Rocksvold
+#Pedro de los Reyes
+#Stormon Force
+
 ## The robot should now be able to make use of both sensors to navigate the
 ## perimeter of a room and HOPEFULLY map it out on a matrix, provided the
 ## silly toy wheels and motors can get it there.
