@@ -1,3 +1,11 @@
+#Version Date: November 29th, 2016
+#Alexander Rudolph
+#Alinda Heng
+#Bailey Durkin
+#Nicholas Rocksvold
+#Pedro de los Reyes
+#Stormon Force
+
 #Server side code, this is the only thing that will run on the robot in our final version (if agreed upon)
 #Only code that will have the gopigo library imported
 
