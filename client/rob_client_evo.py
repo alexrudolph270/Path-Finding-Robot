@@ -1,3 +1,11 @@
+#Version Date: November 29th, 2016
+#Alexander Rudolph
+#Alinda Heng
+#Bailey Durkin
+#Nicholas Rocksvold
+#Pedro de los Reyes
+#Stormon Force
+
 #Client side code, this module will be imported throughtout each subsystem
 #When this is fully implemented, we will not have 'from gopigo import *' in any code except for rob_server.py
 
