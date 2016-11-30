@@ -23,6 +23,7 @@ import time
 import rob_client_evo
 from rob_client_evo import *
 from path_mode_tcp import *
+from map_mode_tcp_evo import *
 
 
 #from gopigo import *
@@ -41,7 +42,8 @@ class Direct(tk.Toplevel):
         self.done = 1               # Check if robot is done moving.
         self.first_key = None       # Initial key pressed.
         self.current_key = None     # Used to check if current key is same as initial.
-        self.delay = 0.3            # Delay time for check().
+        self.delay = 0.1            # Delay time for check().
+        self.wall = 25              # Distance at which robot will stop from wall.
 
         # List of acceptable inputs.
         self.accept = ['q', 'w', 'e', 'a', 's', 'd']
@@ -140,7 +142,11 @@ class Direct(tk.Toplevel):
             color = "green"
             self.first_key = key_press
             if key_press == 'w':
-                if self.done == 1:
+                dist = send_command("us_dist(15)")
+                print("Distance:", dist)
+                if dist <= self.wall:
+                    send_command("stop()")
+                elif self.done == 1:
                     self.done = 0
                     tk.Label(self, text="W", bg=color).grid(row=10, column=6)
                     print("Robot is moving forward.")
@@ -209,6 +215,19 @@ class Direct(tk.Toplevel):
 
         # Check if current_key is the same as the initial one. Keeps going if so.
         elif self.current_key == self.first_key:
+            dist = send_command("us_dist(15)")
+
+            ## Evolution for robot movement
+            # Prevent robot from crashing into the wall if holding w.
+            if self.current_key == "w":
+                if dist <= self.wall:
+                    send_command("stop()")
+                    self.done = 1
+
+                    root.bind_all("<KeyPress>", self.key_input)
+
+
+
             # Robot keeps going in current direction.
             self.current_key = None  # Resetting the key to None to wait for another input.
             self.check()
@@ -343,8 +362,7 @@ class Map(tk.Toplevel):
         tk.Toplevel.__init__(self)
         self.title("Map Mode")
 
-        send_command("server_mapmode()")
-
+        m = map_mode()
         # Pressing the x button will return to the Main Menu.
         self.protocol('WM_DELETE_WINDOW', self.onClose)
 
